@@ -1,0 +1,100 @@
+extern "C"{
+
+  void _init() {};
+
+  // (Called from exc.S with global interrupts disabled.)
+  void __error(int num) {
+    while(1);
+  }
+
+}
+
+#include "stm32f2xx_dma.h"
+#include "stm32f2xx_rcc.h"
+#include "stm32f2xx_spi.h"
+#include "stm32f2xx_gpio.h"
+#include "stm32f2xx_flash.h"
+
+extern "C" {
+  #include "driver_display.h"
+  #include "pins.h"
+  #include "driver_display.c"
+  #include "pins.c"
+}
+
+#include "driver_display.cpp"
+
+static void CPU_SetFixedFreqWithPLL(void) {
+  RCC_DeInit();
+
+  RCC_HSEConfig(RCC_HSE_ON);
+  ErrorStatus HSEStartUpStatus = RCC_WaitForHSEStartUp();
+
+  if (HSEStartUpStatus == SUCCESS) {
+    
+    FLASH_SetLatency(FLASH_Latency_3);
+    
+    // Switch over to HSE, as we might be using the PLL,
+    // and changing it while sourcing from it is asking
+    // for trouble
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_HSE);
+    while (RCC_GetSYSCLKSource() != (uint32_t)RCC_CFGR_SWS_HSE);
+    
+    // Disable the PLL while we're changing it
+    RCC_PLLCmd(DISABLE);
+    
+    // HCLK == SYSCLK
+    RCC_HCLKConfig(RCC_SYSCLK_Div1);
+    
+    /* PCLK2 == HCLK / 2  */
+    RCC_PCLK2Config(RCC_HCLK_Div2);
+    
+    /* PCLK1 == HCLK / 4 */
+    RCC_PCLK1Config(RCC_HCLK_Div4);
+  
+  	RCC_PLLConfig(RCC_PLLSource_HSE, //RCC_PLLCFGR_PLLSRC_HSE,
+       25, /* m */  /* 26 = External clock in MHz */
+       240, /* n */
+       2, /* p */
+       5); /* q */
+    
+    RCC_PLLCmd(ENABLE);
+
+    while (RCC_GetFlagStatus(RCC_FLAG_PLLRDY) == RESET);
+    
+    RCC_SYSCLKConfig(RCC_SYSCLKSource_PLLCLK);
+   
+    while (RCC_GetSYSCLKSource() != (uint32_t)RCC_CFGR_SWS_PLL) {}
+  }
+}
+
+void init() {
+  // Enable Prefetch Buffer
+  FLASH_PrefetchBufferCmd(ENABLE);
+  // Enable Instruction Cache
+  FLASH_InstructionCacheCmd(ENABLE);
+  // Enable Data Cache
+  FLASH_DataCacheCmd(ENABLE);
+
+  pinsInit();
+
+  CPU_SetFixedFreqWithPLL();
+
+  //oled_init();
+  //delay(40);
+  //oled_draw(0, 0, 0);
+
+}
+
+void setup();
+void loop();
+
+int main(void) {
+  init();
+  setup();
+
+	while(1) loop();
+	return 0;
+}
+
+#include "../sketch/ssw.ino"

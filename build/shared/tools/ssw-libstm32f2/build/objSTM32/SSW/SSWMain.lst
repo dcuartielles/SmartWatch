@@ -1,0 +1,207 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 4
+  11              		.eabi_attribute 18, 4
+  12              		.thumb
+  13              		.file	"SSWMain.cpp"
+  21              	.Ltext0:
+  22              		.cfi_sections	.debug_frame
+  23              		.section	.text._init,"ax",%progbits
+  24              		.align	1
+  25              		.global	_init
+  26              		.thumb
+  27              		.thumb_func
+  29              	_init:
+  30              	.LFB0:
+  31              		.file 1 "/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp"
+   1:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** extern "C"{
+   2:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****   
+   3:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** void _init(){};
+  32              		.loc 1 3 0
+  33              		.cfi_startproc
+  34              		@ args = 0, pretend = 0, frame = 0
+  35              		@ frame_needed = 0, uses_anonymous_args = 0
+  36              		@ link register save eliminated.
+  37              		.loc 1 3 0
+  38 0000 7047     		bx	lr
+  39              		.cfi_endproc
+  40              	.LFE0:
+  42              		.section	.text.__error,"ax",%progbits
+  43              		.align	1
+  44              		.global	__error
+  45              		.thumb
+  46              		.thumb_func
+  48              	__error:
+  49              	.LFB1:
+   4:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+   5:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** /**
+   6:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****  * @brief Disables all peripheral interrupts except USB and fades the
+   7:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****  *        error LED.
+   8:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****  */
+   9:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** /* (Called from exc.S with global interrupts disabled.) */
+  10:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** void __error(int num) {
+  50              		.loc 1 10 0
+  51              		.cfi_startproc
+  52              		@ args = 0, pretend = 0, frame = 0
+  53              		@ frame_needed = 0, uses_anonymous_args = 0
+  54              		@ link register save eliminated.
+  55              	.LVL0:
+  11:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     /*nvic_globalirq_enable();
+  12:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     usart_putstr(ERROR_USART, "\r\nexception: ");
+  13:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     usart_putudec(ERROR_USART, num);
+  14:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     usart_putc(ERROR_USART, '\n');
+  15:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     usart_putc(ERROR_USART, '\r');
+  16:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 	for(;;);
+  17:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     throb();
+  18:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 	
+  19:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 	// Turn off peripheral interrupts
+  20:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     nvic_irq_disable_all();
+  21:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  22:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     // Turn off timers 
+  23:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     timer_disable_all();
+  24:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  25:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     // Turn off ADC 
+  26:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     adc_disable_all();
+  27:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  28:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     // Turn off all USARTs 
+  29:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     usart_disable_all();
+  30:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  31:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     // Turn the USB interrupt back on so the bootloader keeps on functioning 
+  32:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     nvic_irq_enable(NVIC_USB_HP_CAN_TX);
+  33:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     nvic_irq_enable(NVIC_USB_LP_CAN_RX0);
+  34:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  35:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     // Reenable global interrupts 
+  36:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     nvic_globalirq_enable();
+  37:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     throb();
+  38:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****     */
+  39:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** }
+  56              		.loc 1 39 0
+  57 0000 7047     		bx	lr
+  58              		.cfi_endproc
+  59              	.LFE1:
+  61              		.section	.text._Z4loopv,"ax",%progbits
+  62              		.align	1
+  63              		.global	_Z4loopv
+  64              		.thumb
+  65              		.thumb_func
+  67              	_Z4loopv:
+  68              	.LFB60:
+  69              		.file 2 "/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino"
+   1:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** void loop() {
+  70              		.loc 2 1 0
+  71              		.cfi_startproc
+  72              		@ args = 0, pretend = 0, frame = 0
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74              		@ link register save eliminated.
+   2:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** //  digitalWrite(0, HIGH);
+   3:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** }
+  75              		.loc 2 3 0
+  76 0000 7047     		bx	lr
+  77              		.cfi_endproc
+  78              	.LFE60:
+  80              		.section	.text._Z5setupv,"ax",%progbits
+  81              		.align	1
+  82              		.global	_Z5setupv
+  83              		.thumb
+  84              		.thumb_func
+  86              	_Z5setupv:
+  87              	.LFB61:
+   4:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** 
+   5:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** void setup() {
+  88              		.loc 2 5 0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+   6:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** 
+   7:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/../sketch/ssw.ino **** }...
+  93              		.loc 2 7 0
+  94 0000 7047     		bx	lr
+  95              		.cfi_endproc
+  96              	.LFE61:
+  98              		.section	.text._Z4initv,"ax",%progbits
+  99              		.align	1
+ 100              		.global	_Z4initv
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	_Z4initv:
+ 105              	.LFB58:
+  40:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  41:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** }
+  42:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  43:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** #include "stm32f2xx_dma.h"
+  44:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** #include "stm32f2xx_rcc.h"
+  45:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** #include "stm32f2xx_spi.h"
+  46:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** #include "stm32f2xx_gpio.h"
+  47:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  48:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** void init() {
+ 106              		.loc 1 48 0
+ 107              		.cfi_startproc
+ 108              		@ args = 0, pretend = 0, frame = 0
+ 109              		@ frame_needed = 0, uses_anonymous_args = 0
+ 110              		@ link register save eliminated.
+  49:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****   RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE);
+ 111              		.loc 1 49 0
+ 112 0000 4FF48000 		mov	r0, #4194304
+ 113 0004 0121     		movs	r1, #1
+  50:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** }
+ 114              		.loc 1 50 0
+ 115              		.loc 1 49 0
+ 116 0006 FFF7FEBF 		b	RCC_AHB1PeriphClockCmd
+ 117              		.cfi_endproc
+ 118              	.LFE58:
+ 120              		.section	.text.main,"ax",%progbits
+ 121              		.align	1
+ 122              		.global	main
+ 123              		.thumb
+ 124              		.thumb_func
+ 126              	main:
+ 127              	.LFB59:
+  51:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  52:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** void setup();
+  53:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** void loop();
+  54:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** 
+  55:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp **** int main(void) {
+ 128              		.loc 1 55 0
+ 129              		.cfi_startproc
+ 130              		@ args = 0, pretend = 0, frame = 0
+ 131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 132 0000 08B5     		push	{r3, lr}
+ 133              	.LCFI0:
+ 134              		.cfi_def_cfa_offset 8
+  56:/home/david/Dropbox/AV_SmartWatch/toolchain_v2/ssw-libstm32f2/SSW/SSWMain.cpp ****   init();
+ 135              		.loc 1 56 0
+ 136              		.cfi_offset 14, -4
+ 137              		.cfi_offset 3, -8
+ 138 0002 FFF7FEFF 		bl	_Z4initv
+ 139              	.L12:
+ 140 0006 FEE7     		b	.L12
+ 141              		.cfi_endproc
+ 142              	.LFE59:
+ 144              		.text
+ 145              	.Letext0:
+DEFINED SYMBOLS
+                            *ABS*:00000000 SSWMain.cpp
+     /tmp/ccHRgUOR.s:24     .text._init:00000000 $t
+     /tmp/ccHRgUOR.s:29     .text._init:00000000 _init
+     /tmp/ccHRgUOR.s:43     .text.__error:00000000 $t
+     /tmp/ccHRgUOR.s:48     .text.__error:00000000 __error
+     /tmp/ccHRgUOR.s:62     .text._Z4loopv:00000000 $t
+     /tmp/ccHRgUOR.s:67     .text._Z4loopv:00000000 _Z4loopv
+     /tmp/ccHRgUOR.s:81     .text._Z5setupv:00000000 $t
+     /tmp/ccHRgUOR.s:86     .text._Z5setupv:00000000 _Z5setupv
+     /tmp/ccHRgUOR.s:99     .text._Z4initv:00000000 $t
+     /tmp/ccHRgUOR.s:104    .text._Z4initv:00000000 _Z4initv
+     /tmp/ccHRgUOR.s:121    .text.main:00000000 $t
+     /tmp/ccHRgUOR.s:126    .text.main:00000000 main
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+RCC_AHB1PeriphClockCmd
